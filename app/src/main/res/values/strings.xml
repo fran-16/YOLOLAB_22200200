@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ABCOnlyOne</string>
+    <string name="camera_permission_required">Se necesita permiso de cámara para detectar personas.</string>
+</resources>
