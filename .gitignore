@@ -1,6 +1,7 @@
 *.iml
 .gradle
 .kotlin
+yolo-export
 /local.properties
 /.idea/caches
 /.idea
