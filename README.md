@@ -19,3 +19,13 @@ El codigo filtra la clase `person` de COCO (`PERSON_CLASS_ID = 0`), aplica `conf
 ```
 
 La app no declara permiso de internet; la inferencia ocurre 100% en el dispositivo.
+
+## Exportar el modelo en Google Colab
+
+Abre `colab/export_yolo_litert.ipynb` en Google Colab, ejecuta todas las celdas y descarga:
+
+```text
+yolov8n_person_fp16.tflite
+```
+
+Luego copia ese archivo a `app/src/main/assets/`.
