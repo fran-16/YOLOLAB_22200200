@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ABCOnlyOne"
+rootProject.name = "YOLOLAB_22200200"
 include(":app")
