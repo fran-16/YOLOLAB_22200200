@@ -1,4 +1,4 @@
-package com.illareklab.abconlyone.camera
+package com.RezzaValencia.yololab_22200200.camera
 
 import android.content.Context
 import android.view.OrientationEventListener

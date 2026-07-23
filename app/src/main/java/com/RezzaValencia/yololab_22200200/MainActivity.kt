@@ -1,4 +1,4 @@
-package com.illareklab.abconlyone
+package com.RezzaValencia.yololab_22200200
 
 import android.Manifest
 import android.os.Bundle
@@ -26,8 +26,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import android.content.pm.PackageManager
-import com.illareklab.abconlyone.ui.CameraScreen
-import com.illareklab.abconlyone.ui.theme.ABCOnlyOneTheme
+import com.RezzaValencia.yololab_22200200.ui.CameraScreen
+import com.RezzaValencia.yololab_22200200.ui.theme.ABCOnlyOneTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

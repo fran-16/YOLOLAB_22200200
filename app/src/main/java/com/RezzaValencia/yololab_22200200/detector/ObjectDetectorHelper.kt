@@ -1,4 +1,4 @@
-package com.illareklab.abconlyone.detector
+package com.RezzaValencia.yololab_22200200.detector
 
 import android.content.Context
 import android.graphics.Bitmap

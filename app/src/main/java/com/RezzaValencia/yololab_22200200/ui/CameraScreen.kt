@@ -1,4 +1,4 @@
-package com.illareklab.abconlyone.ui
+package com.RezzaValencia.yololab_22200200.ui
 
 import android.content.Context
 import android.graphics.Paint
@@ -33,10 +33,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.illareklab.abconlyone.camera.CameraController
-import com.illareklab.abconlyone.detector.BoundingBox
-import com.illareklab.abconlyone.detector.ImageUtils
-import com.illareklab.abconlyone.detector.ObjectDetectorHelper
+import com.RezzaValencia.yololab_22200200.camera.CameraController
+import com.RezzaValencia.yololab_22200200.detector.BoundingBox
+import com.RezzaValencia.yololab_22200200.detector.ImageUtils
+import com.RezzaValencia.yololab_22200200.detector.ObjectDetectorHelper
 import kotlin.math.atan2
 import kotlin.math.max
 import kotlin.math.roundToInt

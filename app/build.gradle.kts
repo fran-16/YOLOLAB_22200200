@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.illareklab.abconlyone"
+    namespace = "com.RezzaValencia.yololab_22200200"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.illareklab.abconlyone"
+        applicationId = "com.RezzaValencia.yololab_22200200"
         minSdk = 30
         targetSdk = 36
         versionCode = 1

@@ -1,4 +1,4 @@
-package com.illareklab.abconlyone.ui.theme
+package com.RezzaValencia.yololab_22200200.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

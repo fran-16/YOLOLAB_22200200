@@ -1,4 +1,4 @@
-package com.illareklab.abconlyone.ui.theme
+package com.RezzaValencia.yololab_22200200.ui.theme
 
 import android.app.Activity
 import android.os.Build
