@@ -17,8 +17,8 @@ class ObjectDetectorHelper(
     private val context: Context,
     private val modelName: String = "yolov8n_person_fp16.tflite",
     private val inputSize: Int = 320,
-    private val confThreshold: Float = 0.42f,
-    private val iouThreshold: Float = 0.5f
+    private val confThreshold: Float = 0.62f,
+    private val iouThreshold: Float = 0.35f
 ) {
     private var gpuDelegate: GpuDelegate? = null
     private val interpreter: Interpreter by lazy { setupInterpreter() }
@@ -93,6 +93,7 @@ class ObjectDetectorHelper(
         originalHeight: Int
     ): List<BoundingBox> {
         val boxes = mutableListOf<BoundingBox>()
+        val minArea = originalWidth * originalHeight * MIN_BOX_AREA_RATIO
         for (i in 0 until numBoxes) {
             val personScore = raw[PERSON_CLASS_ID + 4][i]
             if (personScore < confThreshold) continue
@@ -105,6 +106,13 @@ class ObjectDetectorHelper(
             val top = ((cy - h / 2f) - letterbox.dy) / letterbox.scale
             val right = ((cx + w / 2f) - letterbox.dx) / letterbox.scale
             val bottom = ((cy + h / 2f) - letterbox.dy) / letterbox.scale
+            val boxWidth = right - left
+            val boxHeight = bottom - top
+            val area = boxWidth * boxHeight
+            val aspectRatio = boxWidth / (boxHeight + 0.00001f)
+
+            if (area < minArea) continue
+            if (aspectRatio !in MIN_PERSON_ASPECT_RATIO..MAX_PERSON_ASPECT_RATIO) continue
 
             boxes += BoundingBox(
                 x1 = left.coerceIn(0f, originalWidth.toFloat()),
@@ -120,12 +128,25 @@ class ObjectDetectorHelper(
     private fun nonMaxSuppression(boxes: List<BoundingBox>): List<BoundingBox> {
         val selected = mutableListOf<BoundingBox>()
         val candidates = boxes.sortedByDescending { it.score }.toMutableList()
-        while (candidates.isNotEmpty()) {
+        while (candidates.isNotEmpty() && selected.size < MAX_DETECTIONS) {
             val current = candidates.removeAt(0)
             selected += current
-            candidates.removeAll { iou(current, it) > iouThreshold }
+            candidates.removeAll { isDuplicate(current, it) }
         }
         return selected
+    }
+
+    private fun isDuplicate(a: BoundingBox, b: BoundingBox): Boolean {
+        if (iou(a, b) > iouThreshold) return true
+        val centerAx = (a.x1 + a.x2) / 2f
+        val centerAy = (a.y1 + a.y2) / 2f
+        val centerBx = (b.x1 + b.x2) / 2f
+        val centerBy = (b.y1 + b.y2) / 2f
+        val distanceX = kotlin.math.abs(centerAx - centerBx)
+        val distanceY = kotlin.math.abs(centerAy - centerBy)
+        val averageWidth = ((a.x2 - a.x1) + (b.x2 - b.x1)) / 2f
+        val averageHeight = ((a.y2 - a.y1) + (b.y2 - b.y1)) / 2f
+        return distanceX < averageWidth * 0.35f && distanceY < averageHeight * 0.35f
     }
 
     private fun iou(a: BoundingBox, b: BoundingBox): Float {
@@ -142,5 +163,9 @@ class ObjectDetectorHelper(
     private companion object {
         private const val TAG = "ObjectDetectorHelper"
         private const val PERSON_CLASS_ID = 0
+        private const val MIN_BOX_AREA_RATIO = 0.015f
+        private const val MIN_PERSON_ASPECT_RATIO = 0.12f
+        private const val MAX_PERSON_ASPECT_RATIO = 1.8f
+        private const val MAX_DETECTIONS = 12
     }
 }
