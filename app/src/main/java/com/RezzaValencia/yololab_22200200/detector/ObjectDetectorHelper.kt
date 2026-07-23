@@ -17,8 +17,8 @@ class ObjectDetectorHelper(
     private val context: Context,
     private val modelName: String = "yolov8n_person_fp16.tflite",
     private val inputSize: Int = 320,
-    private val confThreshold: Float = 0.5f,
-    private val iouThreshold: Float = 0.45f
+    private val confThreshold: Float = 0.42f,
+    private val iouThreshold: Float = 0.5f
 ) {
     private var gpuDelegate: GpuDelegate? = null
     private val interpreter: Interpreter by lazy { setupInterpreter() }

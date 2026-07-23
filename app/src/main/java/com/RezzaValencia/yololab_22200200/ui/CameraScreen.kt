@@ -102,6 +102,7 @@ fun CameraScreen() {
             detections = detections,
             frameWidth = frameWidth,
             frameHeight = frameHeight,
+            angleDegrees = tiltAngle,
             modifier = Modifier.fillMaxSize()
         )
 
@@ -130,6 +131,7 @@ private fun DetectionOverlay(
     detections: List<BoundingBox>,
     frameWidth: Int,
     frameHeight: Int,
+    angleDegrees: Float,
     modifier: Modifier = Modifier
 ) {
     Canvas(modifier = modifier) {
@@ -141,6 +143,16 @@ private fun DetectionOverlay(
             color = android.graphics.Color.WHITE
             textSize = 36f
             isAntiAlias = true
+            isFakeBoldText = true
+        }
+
+        rotate(angleDegrees, pivot = center) {
+            drawLine(
+                color = Color(0xFF39FF88),
+                start = Offset(-size.width * 0.1f, size.height * 0.18f),
+                end = Offset(size.width * 1.1f, size.height * 0.18f),
+                strokeWidth = 8f
+            )
         }
 
         detections.forEach { box ->
@@ -149,10 +161,10 @@ private fun DetectionOverlay(
             val right = box.x2 * scale - offsetX
             val bottom = box.y2 * scale - offsetY
             drawRect(
-                color = Color.Green,
+                color = Color(0xFF39FF88),
                 topLeft = Offset(left, top),
                 size = Size(right - left, bottom - top),
-                style = Stroke(width = 4f)
+                style = Stroke(width = 8f)
             )
             drawContext.canvas.nativeCanvas.drawText(
                 "${box.label} ${(box.score * 100).toInt()}%",
